@@ -6,11 +6,21 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/16 18:44:30 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:18:36 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_action(t_philo *philo, char *action, char *color, long long time)
+{
+	pthread_mutex_lock(philo->action);
+	if (philo->die != 1 && philo->stop != 1)
+		printf("%s%lli %i is %s...\n", color, time, (philo->id + 1), action);
+	if (action[0] == 'd')
+		philo->die = 1;
+	pthread_mutex_unlock(philo->action);
+}
 
 void	*ft_calc_die(void *philo_void)
 {
@@ -19,32 +29,34 @@ void	*ft_calc_die(void *philo_void)
 
 	t = ft_get_time();
 	philo = (t_philo *)philo_void;
-	while ((t - philo->last_meat) < philo->time_to_die)
+	while ((t - philo->last_meat) < philo->time_to_die && philo->stop == 0)
 		t = ft_get_time();
-	philo->die = 1;
-	printf("%i Died...", (philo->id + 1));
-	ft_stop_philos(philo->philos);
+	t -= philo->time_zero;
+	if (philo->stop == 0)
+		ft_action(philo, "die", "\x1B[31m", t);
 	return (NULL);
 }
 
 void	*ft_routine(void *philo_void)
 {
-	t_philo	*philo;
+	t_philo		*philo;
+	long long	time;
 
 	philo = (t_philo *)philo_void;
 	pthread_create(&philo->live, NULL, ft_calc_die, philo);
-	while (philo->die == 0)
+	while (philo->die == 0 && philo->stop == 0)
 	{
-		pthread_mutex_lock(&philo->mutex_right);
-		pthread_mutex_lock(&philo->mutex_left);
+		pthread_mutex_lock(philo->mutex_right);
+		pthread_mutex_lock(philo->mutex_left);
 		philo->last_meat = ft_get_time();
-		printf("%i is eating...\n", (philo->id + 1));
-		ft_process(philo->time_to_eat);
-		pthread_mutex_unlock(&philo->mutex_right);
-		pthread_mutex_unlock(&philo->mutex_left);
-		printf("%i is sleeping...\n", (philo->id + 1));
-		ft_process(philo->time_to_sleep);
-		printf("%i is thinking...\n", (philo->id + 1));
+		time = philo->last_meat - philo->time_zero;
+		ft_action(philo, "eating", "\x1B[33m", time);
+		time = ft_process(philo->time_to_eat, philo->time_zero);
+		pthread_mutex_unlock(philo->mutex_right);
+		pthread_mutex_unlock(philo->mutex_left);
+		ft_action(philo, "sleeping", "\x1B[34m", time);
+		time = ft_process(philo->time_to_sleep, philo->time_zero);
+		ft_action(philo, "thinking", "\x1B[32m", time);
 	}
 	return (NULL);
 }

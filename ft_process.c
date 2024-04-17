@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:36:27 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/16 18:39:24 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:49:31 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,16 @@ void	ft_stop_philos(t_philo **philos)
 	i = 0;
 	while (philos[i])
 	{
-		pthread_join(philos[i]->thread, NULL);
+		philos[i]->stop = 1;
+		i++;
+	}
+	i = 0;
+	while (philos[i])
+	{
 		pthread_join(philos[i]->live, NULL);
-		pthread_mutex_destroy(&philos[i]->mutex_right);
+		pthread_join(philos[i]->thread, NULL);
+		pthread_mutex_destroy(philos[i]->mutex_right);
+		free(philos[i]->mutex_right);
 		free(philos[i]);
 		i++;
 	}
@@ -36,7 +43,7 @@ long long	ft_get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	ft_process(long long time)
+long long	ft_process(long long time, long long time_zero)
 {
 	long long	t;
 	long long	start;
@@ -45,4 +52,5 @@ void	ft_process(long long time)
 	start = t;
 	while ((t - start) < time)
 		t = ft_get_time();
+	return (t - time_zero);
 }

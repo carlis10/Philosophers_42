@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:38:15 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/16 18:34:43 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:59:55 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@
 
 typedef struct s_philo
 {
-	int				id;
 	pthread_t		thread;
 	pthread_t		live;
-	pthread_mutex_t	mutex_right;
-	pthread_mutex_t	mutex_left;
+	pthread_mutex_t	*mutex_right;
+	pthread_mutex_t	*mutex_left;
+	pthread_mutex_t	*action;
+	struct s_philo	**philos;
+	int				id;
 	long long		last_meat;
+	long long		time_zero;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_think;
@@ -35,7 +38,7 @@ typedef struct s_philo
 	int				number_eat_total;
 	int				number_eat;
 	int				die;
-	struct s_philo	**philos;
+	int				stop;
 
 }				t_philo;
 
@@ -52,7 +55,7 @@ typedef struct s_info
 }				t_info;
 
 long long	ft_get_time(void);
-void		ft_process(long long time);
+long long	ft_process(long long time, long long time_zero);
 void		*ft_routine(void *philo_void);
 void		ft_error(char *str);
 void		ft_init_info(t_info *info, char **argv, int argc);
