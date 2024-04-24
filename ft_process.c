@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:36:27 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/17 15:49:31 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:01:47 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ void	ft_stop_philos(t_philo **philos)
 	i = 0;
 	while (philos[i])
 	{
-		pthread_join(philos[i]->live, NULL);
 		pthread_join(philos[i]->thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (philos[i])
+	{
 		pthread_mutex_destroy(philos[i]->mutex_right);
-		free(philos[i]->mutex_right);
 		free(philos[i]);
 		i++;
 	}

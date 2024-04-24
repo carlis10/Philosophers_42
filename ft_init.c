@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:48:44 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/17 16:01:35 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:02:01 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_init_philo(t_info *info)
 	int				i;
 	t_philo			**philos;
 
-	philos = (t_philo **)malloc(sizeof(t_philo *) + info->num_philo + 1);
+	philos = (t_philo **)malloc(sizeof(t_philo) + info->num_philo + 1);
 	i = 0;
 	while (i < info->num_philo)
 	{

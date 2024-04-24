@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/17 16:18:36 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:45:48 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void	*ft_routine(void *philo_void)
 		time = ft_process(philo->time_to_sleep, philo->time_zero);
 		ft_action(philo, "thinking", "\x1B[32m", time);
 	}
+	pthread_join(philo->live, NULL);
 	return (NULL);
 }
