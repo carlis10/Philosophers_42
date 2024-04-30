@@ -64,5 +64,6 @@ int			ft_atoi(const char *str);
 int			ft_isnum(char *str);
 int			ft_check_args(char **argv, int argc);
 void		ft_stop_philos(t_philo **philos);
+void	ft_delete_philos(t_philo **philos);
 
 #endif

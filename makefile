@@ -14,7 +14,7 @@ NAME			= philo
 INCLUDE			= philo.h
 CC				= gcc
 CFLAGS			= -Wall -Werror -Wextra -Imlx
-DBUG			= -fsanitize=address
+DBUG			= -fsanitize=thread
 RM				= rm -rf
 
 
@@ -26,7 +26,7 @@ OBJ			=$(SRC:.c=.o)
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(DBUG)
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)

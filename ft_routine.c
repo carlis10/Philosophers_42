@@ -18,7 +18,10 @@ void	ft_action(t_philo *philo, char *action, char *color, long long time)
 	if (philo->die != 1 && philo->stop != 1)
 		printf("%s%lli %i is %s...\n", color, time, (philo->id + 1), action);
 	if (action[0] == 'd')
+	{
 		philo->die = 1;
+		ft_stop_philos(philo->philos);
+	}
 	pthread_mutex_unlock(philo->action);
 }
 
@@ -44,16 +47,18 @@ void	*ft_routine(void *philo_void)
 
 	philo = (t_philo *)philo_void;
 	pthread_create(&philo->live, NULL, ft_calc_die, philo);
+	if (philo->id % 2 != 0)
+		usleep(1000000);
 	while (philo->die == 0 && philo->stop == 0)
 	{
-		pthread_mutex_lock(philo->mutex_right);
 		pthread_mutex_lock(philo->mutex_left);
+		pthread_mutex_lock(philo->mutex_right);
 		philo->last_meat = ft_get_time();
 		time = philo->last_meat - philo->time_zero;
 		ft_action(philo, "eating", "\x1B[33m", time);
 		time = ft_process(philo->time_to_eat, philo->time_zero);
-		pthread_mutex_unlock(philo->mutex_right);
 		pthread_mutex_unlock(philo->mutex_left);
+		pthread_mutex_unlock(philo->mutex_right);
 		ft_action(philo, "sleeping", "\x1B[34m", time);
 		time = ft_process(philo->time_to_sleep, philo->time_zero);
 		ft_action(philo, "thinking", "\x1B[32m", time);

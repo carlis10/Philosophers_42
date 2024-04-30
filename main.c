@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 		ft_init_info(&info, argv, argc);
 		ft_init_philo(&info);
 		ft_test(&info);
-		ft_stop_philos(info.philos);
+		ft_delete_philos(info.philos);
 	}
 	return (0);
 }

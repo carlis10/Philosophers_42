@@ -69,7 +69,8 @@ void	ft_init_philo(t_info *info)
 	int				i;
 	t_philo			**philos;
 
-	philos = (t_philo **)malloc(sizeof(t_philo) + info->num_philo + 1);
+	philos = (t_philo **)malloc(sizeof(t_philo *) + info->num_philo + 1);
+	philos[info->num_philo] = 0;
 	i = 0;
 	while (i < info->num_philo)
 	{

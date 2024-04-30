@@ -22,6 +22,11 @@ void	ft_stop_philos(t_philo **philos)
 		philos[i]->stop = 1;
 		i++;
 	}
+}
+void	ft_delete_philos(t_philo **philos)
+{
+	int	i;
+
 	i = 0;
 	while (philos[i])
 	{
@@ -32,6 +37,9 @@ void	ft_stop_philos(t_philo **philos)
 	while (philos[i])
 	{
 		pthread_mutex_destroy(philos[i]->mutex_right);
+		free(philos[i]->mutex_right);
+		pthread_mutex_destroy(philos[i]->action);
+		free(philos[i]->action);
 		free(philos[i]);
 		i++;
 	}
