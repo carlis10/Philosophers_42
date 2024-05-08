@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/24 17:45:48 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:22:18 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	*ft_routine(void *philo_void)
 
 	philo = (t_philo *)philo_void;
 	pthread_create(&philo->live, NULL, ft_calc_die, philo);
-	if (philo->id % 2 != 0)
-		usleep(1000000);
 	while (philo->die == 0 && philo->stop == 0)
 	{
 		pthread_mutex_lock(philo->mutex_left);
