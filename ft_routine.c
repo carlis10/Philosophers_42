@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/08 16:22:18 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:49:49 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_action(t_philo *philo, char *action, char *color, long long time)
 {
 	pthread_mutex_lock(philo->action);
 	if (philo->die != 1 && philo->stop != 1)
-		printf("%s%lli %i is %s...\n", color, time, (philo->id + 1), action);
+		printf("%s%lli, %i is %s...\n", color, time, (philo->id + 1), action);
 	if (action[0] == 'd')
 	{
 		philo->die = 1;
@@ -40,6 +40,20 @@ void	*ft_calc_die(void *philo_void)
 	return (NULL);
 }
 
+void	ft_take_forks(t_philo *philo)
+{
+	if ((philo->id + 1) % 2 == 0)
+	{
+		pthread_mutex_lock(philo->mutex_left);
+		pthread_mutex_lock(philo->mutex_right);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->mutex_right);
+		pthread_mutex_lock(philo->mutex_left);
+	}
+}
+
 void	*ft_routine(void *philo_void)
 {
 	t_philo		*philo;
@@ -47,12 +61,14 @@ void	*ft_routine(void *philo_void)
 
 	philo = (t_philo *)philo_void;
 	pthread_create(&philo->live, NULL, ft_calc_die, philo);
-	while (philo->die == 0 && philo->stop == 0)
+	while (philo->die == 0 && philo->stop == 0 \
+			&& philo->number_eat != philo->number_eat_total)
 	{
-		pthread_mutex_lock(philo->mutex_left);
-		pthread_mutex_lock(philo->mutex_right);
+		ft_take_forks(philo);
 		philo->last_meat = ft_get_time();
 		time = philo->last_meat - philo->time_zero;
+		if (philo->number_eat_total != -1)
+			philo->number_eat ++;
 		ft_action(philo, "eating", "\x1B[33m", time);
 		time = ft_process(philo->time_to_eat, philo->time_zero);
 		pthread_mutex_unlock(philo->mutex_left);
@@ -61,6 +77,7 @@ void	*ft_routine(void *philo_void)
 		time = ft_process(philo->time_to_sleep, philo->time_zero);
 		ft_action(philo, "thinking", "\x1B[32m", time);
 	}
+	philo->stop = 1;
 	pthread_join(philo->live, NULL);
 	return (NULL);
 }

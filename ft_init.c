@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:48:44 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/24 18:02:01 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:10:37 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ft_init_info(t_info *info, char **argv, int argc)
 	info->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		info->number_eat = ft_atoi(argv[5]);
+	else
+		info->number_eat = -1;
 	info->time_zero = ft_get_time();
 }
 

@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:38:15 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/24 17:45:12 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:31:54 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int			ft_atoi(const char *str);
 int			ft_isnum(char *str);
 int			ft_check_args(char **argv, int argc);
 void		ft_stop_philos(t_philo **philos);
-void	ft_delete_philos(t_philo **philos);
+void		ft_delete_philos(t_philo **philos);
 
 #endif

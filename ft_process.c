@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:36:27 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/24 18:01:47 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:31:37 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_stop_philos(t_philo **philos)
 		i++;
 	}
 }
+
 void	ft_delete_philos(t_philo **philos)
 {
 	int	i;
