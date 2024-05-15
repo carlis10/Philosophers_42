@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:48:44 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/08 17:10:37 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:55:43 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_init_info(t_info *info, char **argv, int argc)
 
 void	ft_give_forks(t_philo *philo, t_philo **philos, t_info *info)
 {
-	if (philo->id != (info->num_philo - 1))
+	if (philo->id != (info->num_philo - 1) || philo->id == 0)
 	{
 		philo->mutex_right = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (!philo->mutex_right)
@@ -62,6 +62,7 @@ void	ft_start_philo(t_philo *philo, t_info *info)
 	philo->time_to_eat = info->time_to_eat;
 	philo->time_to_sleep = info->time_to_sleep;
 	philo->time_to_think = info->time_to_think;
+	philo->total_philos = info->num_philo;
 	if (pthread_create(&philo->thread, NULL, ft_routine, philo))
 		ft_error("thread error");
 }

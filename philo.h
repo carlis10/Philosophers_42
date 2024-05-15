@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:38:15 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/08 16:31:54 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:21:28 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	pthread_mutex_t	*action;
 	struct s_philo	**philos;
 	int				id;
+	int				total_philos;
 	long long		last_meat;
 	long long		time_zero;
 	int				time_to_die;

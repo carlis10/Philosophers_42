@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_routine.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/09 01:01:40 by carlos           ###   ########.fr       */
+/*   Updated: 2024/05/15 14:52:33 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ void	ft_take_forks(t_philo *philo)
 	}
 }
 
-void	ft_wait_even(t_philo *philo)
+void	ft_wait(t_philo *philo)
 {
 	if ((philo->id + 1) % 2 == 0)
-		usleep(philo->time_to_eat * 100);
+		ft_process(philo->time_to_eat, 0);
+	if (philo->id == 0 && philo->total_philos == 1)
+		ft_process(philo->time_to_die, 0);
 }
 
 void	*ft_routine(void *philo_void)
@@ -67,7 +69,7 @@ void	*ft_routine(void *philo_void)
 
 	philo = (t_philo *)philo_void;
 	pthread_create(&philo->live, NULL, ft_calc_die, philo);
-	ft_wait_even(philo);
+	ft_wait(philo);
 	while (philo->die == 0 && philo->stop == 0 \
 			&& philo->number_eat != philo->number_eat_total)
 	{
