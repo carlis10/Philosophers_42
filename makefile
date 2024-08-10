@@ -6,14 +6,14 @@
 #    By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 17:15:42 by cravegli          #+#    #+#              #
-#    Updated: 2024/05/08 16:28:20 by cravegli         ###   ########.fr        #
+#    Updated: 2024/08/10 14:36:01 by cravegli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= philo
 INCLUDE			= philo.h
 CC				= gcc
-CFLAGS			= -Wall -Werror -Wextra -Imlx
+CFLAGS			= -Wall -Werror -Wextra -g
 DBUG			= -fsanitize=thread
 RM				= rm -rf
 
@@ -26,7 +26,7 @@ OBJ			=$(SRC:.c=.o)
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(DBUG)
+			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)

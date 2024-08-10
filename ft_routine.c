@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/15 14:52:33 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:40:45 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	ft_action(t_philo *philo, char *action, char *color, long long time)
 {
-	pthread_mutex_lock(philo->action);
+	//pthread_mutex_lock(philo->action);
 	if (philo->die != 1 && philo->stop != 1)
 		printf("%s%lli, %i is %s...\n", color, time, (philo->id + 1), action);
 	if (action[0] == 'd')
 	{
 		philo->die = 1;
-		ft_stop_philos(philo->philos);
+		pthread_mutex_unlock(philo->mutex_left);
+		pthread_mutex_unlock(philo->mutex_right);
+		ft_stop_philos(&philo);
 	}
-	pthread_mutex_unlock(philo->action);
+	//pthread_mutex_unlock(philo->action);
 }
 
 void	*ft_calc_die(void *philo_void)
@@ -56,9 +58,7 @@ void	ft_take_forks(t_philo *philo)
 
 void	ft_wait(t_philo *philo)
 {
-	if ((philo->id + 1) % 2 == 0)
-		ft_process(philo->time_to_eat, 0);
-	if (philo->id == 0 && philo->total_philos == 1)
+	if (philo->id == 0 && philo->num_philos == 1)
 		ft_process(philo->time_to_die, 0);
 }
 
@@ -76,10 +76,10 @@ void	*ft_routine(void *philo_void)
 		ft_take_forks(philo);
 		philo->last_meat = ft_get_time();
 		time = philo->last_meat - philo->time_zero;
-		if (philo->number_eat_total != -1)
-			philo->number_eat ++;
 		ft_action(philo, "eating", "\x1B[33m", time);
 		time = ft_process(philo->time_to_eat, philo->time_zero);
+		if (philo->number_eat_total != -1)
+			philo->number_eat ++;
 		pthread_mutex_unlock(philo->mutex_left);
 		pthread_mutex_unlock(philo->mutex_right);
 		ft_action(philo, "sleeping", "\x1B[34m", time);

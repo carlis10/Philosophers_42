@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:36:27 by cravegli          #+#    #+#             */
-/*   Updated: 2024/05/15 14:53:11 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:26:08 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,31 @@ void	ft_stop_philos(t_philo **philos)
 	int	i;
 
 	i = 0;
-	while (philos[i])
+	while (i < philos[0]->num_philos)
 	{
 		philos[i]->stop = 1;
 		i++;
 	}
 }
 
-void	ft_delete_philos(t_philo **philos)
+void	ft_delete_philos(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (philos[i])
+	while (i < info->num_philo)
 	{
-		pthread_join(philos[i]->thread, NULL);
+		pthread_join(info->philos[i].thread, NULL);
 		i++;
 	}
 	i = 0;
-	while (philos[i])
+	while (i < info->num_philo)
 	{
-		pthread_mutex_destroy(philos[i]->mutex_right);
-		free(philos[i]->mutex_right);
-		pthread_mutex_destroy(philos[i]->action);
-		free(philos[i]->action);
-		free(philos[i]);
+		pthread_mutex_destroy(&info->fork[i]);
+		pthread_mutex_destroy(&info->action[i]);
 		i++;
 	}
-	free(philos);
+	free(info->philos);
 }
 
 long long	ft_get_time(void)
