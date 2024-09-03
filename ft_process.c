@@ -6,42 +6,32 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:36:27 by cravegli          #+#    #+#             */
-/*   Updated: 2024/08/10 15:26:08 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/03 12:44:07 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_stop_philos(t_philo **philos)
+void	ft_delete_philos(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < philos[0]->num_philos)
+	while (i < philo->num_philos)
 	{
-		philos[i]->stop = 1;
-		i++;
-	}
-}
-
-void	ft_delete_philos(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < info->num_philo)
-	{
-		pthread_join(info->philos[i].thread, NULL);
+		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
 	i = 0;
-	while (i < info->num_philo)
+	while (i < philo->num_philos)
 	{
-		pthread_mutex_destroy(&info->fork[i]);
-		pthread_mutex_destroy(&info->action[i]);
+		pthread_mutex_destroy(philo[i].mutex_left);
 		i++;
 	}
-	free(info->philos);
+	pthread_mutex_destroy(philo->action);
+	free(philo->mutex_left);
+	free(philo->action);
+	free(philo);
 }
 
 long long	ft_get_time(void)
@@ -52,14 +42,11 @@ long long	ft_get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-long long	ft_process(long long time, long long time_zero)
+void	ft_process(long long time)
 {
-	long long	t;
 	long long	start;
 
-	t = ft_get_time();
-	start = t;
-	while ((t - start) < time)
-		t = ft_get_time();
-	return (t - time_zero);
+	start = ft_get_time();
+	while ((ft_get_time() - start) < time)
+		usleep(150);
 }

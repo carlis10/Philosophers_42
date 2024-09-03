@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:38:15 by cravegli          #+#    #+#             */
-/*   Updated: 2024/08/10 15:27:58 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:37:27 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_info
+{
+	int				num_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_think;
+	int				time_to_sleep;
+	int				number_eat;
+	int				start;
+	int				over;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*action;
+}				t_info;
+
 typedef struct s_philo
 {
 	pthread_t		thread;
@@ -29,35 +43,16 @@ typedef struct s_philo
 	pthread_mutex_t	*action;
 	int				num_philos;
 	int				id;
+	t_info			*info;
 	long long		last_meat;
 	long long		time_zero;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_think;
-	int				time_to_sleep;
-	int				number_eat_total;
 	int				number_eat;
 	int				die;
-	int				stop;
 
 }				t_philo;
 
-typedef struct s_info
-{
-	int				num_philo;
-	long long		time_zero;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_think;
-	int				time_to_sleep;
-	int				number_eat;
-	t_philo			*philos;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	*action;
-}				t_info;
-
 long long	ft_get_time(void);
-long long	ft_process(long long time, long long time_zero);
+void		ft_process(long long time);
 void		*ft_routine(void *philo_void);
 void		ft_error(char *str);
 void		ft_init_info(t_info *info, char **argv, int argc);
@@ -65,8 +60,9 @@ void		ft_init_philo(t_info *info);
 int			ft_atoi(const char *str);
 int			ft_isnum(char *str);
 int			ft_check_args(char **argv, int argc);
-void		ft_stop_philos(t_philo **philos);
-void		ft_delete_philos(t_info *info);
-void		ft_print_philos(t_philo **philos);
+void		ft_delete_philos(t_philo *iphilo);
+void		ft_action(t_philo *philo, char *action, char *color);
+void		ft_someone_died(t_philo *philo);
+
 
 #endif

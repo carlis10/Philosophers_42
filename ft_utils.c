@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:04:20 by cravegli          #+#    #+#             */
-/*   Updated: 2024/04/16 18:01:41 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:22:56 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	ft_isnum(char *str)
 	while (str[i])
 	{
 		if (!(str[i] > 47 && str[i] < 58))
-			return (-1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	ft_check_args(char **argv, int argc)
@@ -61,8 +61,8 @@ int	ft_check_args(char **argv, int argc)
 	while (i < argc)
 	{
 		if (!ft_isnum(argv[i]))
-			return (-1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
