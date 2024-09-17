@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:38:15 by cravegli          #+#    #+#             */
-/*   Updated: 2024/09/03 14:37:27 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:02:59 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ int			ft_check_args(char **argv, int argc);
 void		ft_delete_philos(t_philo *iphilo);
 void		ft_action(t_philo *philo, char *action, char *color);
 void		ft_someone_died(t_philo *philo);
-
 
 #endif

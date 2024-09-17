@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:28:37 by cravegli          #+#    #+#             */
-/*   Updated: 2024/09/03 14:48:27 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:49:21 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_wait(t_philo *philo)
 	philo->last_meat = philo->time_zero;
 	if (philo->id & 1)
 		ft_process(philo->info->time_to_eat * 0.9 + 1);
+	if (philo->num_philos == 1)
+		ft_process(philo->info->time_to_die + 1);
 }
 
 void	*ft_routine(void *philo_void)
@@ -62,8 +64,8 @@ void	*ft_routine(void *philo_void)
 		ft_take_forks(philo);
 		philo->last_meat = ft_get_time();
 		ft_action(philo, "eating", "\x1B[33m");
-		ft_process(philo->info->time_to_eat);
 		philo->number_eat ++;
+		ft_process(philo->info->time_to_eat);
 		pthread_mutex_unlock(philo->mutex_right);
 		pthread_mutex_unlock(philo->mutex_left);
 		ft_action(philo, "sleeping", "\x1B[34m");

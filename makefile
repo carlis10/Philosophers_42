@@ -6,7 +6,7 @@
 #    By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 17:15:42 by cravegli          #+#    #+#              #
-#    Updated: 2024/09/03 12:44:36 by cravegli         ###   ########.fr        #
+#    Updated: 2024/09/10 14:46:49 by cravegli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= philo
 INCLUDE			= philo.h
 CC				= gcc
 CFLAGS			= -Wall -Werror -Wextra
-DBUG			= -fsanitize=thread
+DBUG			= -fsanitize=leak -Og -g2
 RM				= rm -rf
 LIB 			= -lpthread
 

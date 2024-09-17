@@ -6,7 +6,7 @@
 /*   By: cravegli <cravegli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:48:44 by cravegli          #+#    #+#             */
-/*   Updated: 2024/09/03 15:31:39 by cravegli         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:48:21 by cravegli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_check_philo(t_philo *philo, t_info *info)
 	int	count;
 
 	info->start = 1;
-	ft_process(300);
+	ft_process(1);
 	while (info->over != 1)
 	{
 		i = 0;
